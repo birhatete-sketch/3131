@@ -1,0 +1,241 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  * {
+    font-family: 'Outfit', sans-serif !important;
+  }
+
+  body {
+    @apply font-sans antialiased text-primary bg-surface;
+    font-family: 'Outfit', sans-serif !important;
+  }
+}
+
+html body {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+@layer components {
+  .skeleton {
+    @apply bg-surface-dark bg-gradient-to-r from-surface-dark via-border to-surface-dark bg-[length:200%_100%] animate-[shimmer_1.5s_infinite];
+  }
+
+  /* Banner Mobil / Masaüstü Geçiş — JS'siz, saf CSS */
+  .banner-desktop-media, .desktop-banner {
+    display: block !important;
+  }
+  .banner-mobile-media, .mobile-banner {
+    display: none !important;
+  }
+  @media (max-width: 768px) {
+    .banner-desktop-media, .desktop-banner {
+      display: none !important;
+    }
+    .banner-mobile-media, .mobile-banner {
+      display: block !important;
+    }
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ===== JHEY'S ADD TO CART MOTION ===== */
+:root {
+  --text-speed: 0.26;
+  --base-delay: calc(var(--text-speed) * 0.25);
+  --tick-speed: 0.12;
+  --ring-speed: 0.2;
+  --check-speed: 0.1;
+  --burst-speed: 0.32;
+  --step-delay: 4;
+  --speed: 1;
+  --custom-color: hsl(140, 100%, 50%); /* Green bursts as requested */
+}
+
+.add-to-cart {
+  padding: 0.6rem 1.4rem;
+  background: #000;
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.78rem;
+  border-radius: 0.75rem;
+  border: 2px solid #0000;
+  width: 100%;
+  --icon-stroke-width: 1.5px;
+  font-weight: 600;
+  position: relative;
+  transition: scale 0.1s ease-out, background 0.3s ease;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  overflow: hidden;
+}
+
+.dark .add-to-cart {
+    background: #fff;
+    color: #000;
+}
+
+.add-to-cart:hover:not(:disabled) {
+    scale: 1.02;
+    background: #111;
+}
+
+.dark .add-to-cart:hover:not(:disabled) {
+    background: #f8fafc;
+}
+
+.add-to-cart:active:not(:disabled) {
+  scale: 0.98;
+}
+
+.add-to-cart[data-adding="true"] {
+  background: #000;
+  pointer-events: none;
+}
+
+.add-to-cart-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  clip-path: circle(100% at 50% 50%);
+  transition-property: clip-path, opacity, filter, translate;
+  transition-duration: calc((var(--text-speed) * 0.6s) * var(--speed)), calc((var(--text-speed) * 1s) * var(--speed));
+  transition-timing-function: ease-out;
+  z-index: 2;
+}
+
+.add-to-cart-icon svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.add-to-cart[data-adding='true'] .add-to-cart-text {
+  clip-path: circle(0% at 50% 50%);
+  filter: blur(2px);
+  opacity: 0;
+  translate: 0 4px;
+}
+
+.added {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Checkmark Burst SVG Styles */
+.checkmark-burst {
+  width: 32px;
+  overflow: visible !important;
+}
+
+.checkmark-burst :is(.ring, .wiggle, .line, .check, .burst, .tick) {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.checkmark-burst .check {
+  opacity: 0.2;
+  scale: 0.3;
+  filter: blur(2px);
+  transition: none;
+}
+
+.checkmark-burst .tick {
+  scale: 0;
+  stroke: var(--custom-color);
+}
+
+.checkmark-burst .ring {
+    stroke: var(--custom-color);
+    opacity: 1;
+    scale: 1;
+}
+
+.checkmark-burst :is(.wiggle, .line) {
+  stroke: var(--custom-color);
+  stroke-dasharray: 1.5 1.5;
+  stroke-dashoffset: -1.5;
+  translate: 0 -180%;
+  transition: none;
+}
+
+.checkmark-burst .burst g {
+  transform-origin: center;
+  rotate: calc(var(--index) * (360 / 8) * 1deg);
+}
+
+/* Animation triggers when data-adding is true */
+.add-to-cart[data-adding="true"] {
+  .check {
+    transition-property: opacity, scale, filter;
+    transition-duration: calc(calc(var(--check-speed) * 1s) * var(--speed));
+    transition-delay: calc((var(--base-delay) * 1s) * var(--speed));
+    transition-timing-function: ease-in-out;
+    opacity: 1;
+    scale: 1;
+    filter: blur(0);
+  }
+  .tick {
+    scale: 1.5;
+    transition-property: scale;
+    transition-duration: calc((calc(var(--tick-speed) * 1s)) * var(--speed));
+    transition-delay: calc(((var(--base-delay) + (var(--check-speed) * (var(--step-delay) * 1.1))) * 1s) * var(--speed));
+    transition-timing-function: ease-out;
+  }
+  .ring {
+    transition-property: opacity, scale, filter;
+    transition-duration: calc((calc(var(--ring-speed) * 1s)) * var(--speed));
+    transition-delay: calc(((var(--base-delay) + (var(--check-speed) * var(--step-delay))) * 1s) * var(--speed));
+    transition-timing-function: ease-in-out; 
+    opacity: 0;
+    scale: 1;
+    filter: blur(1px);
+  }
+  :is(.wiggle, .line) {
+    transition-property: stroke-dashoffset;
+    transition-duration: calc((calc(var(--burst-speed) * 1s)) * var(--speed));
+    transition-delay: calc(((var(--base-delay) + (var(--check-speed) * var(--step-delay)) + (var(--index) * 0.05)) * 1s) * var(--speed));
+    transition-timing-function: ease-out;
+    stroke-dashoffset: 1.5;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

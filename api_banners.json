@@ -1,0 +1,30 @@
+[
+  {
+    "title": "",
+    "subtitle": "",
+    "image": "/uploads/video-1773553516458-629045533.mp4",
+    "mobileImage": "/uploads/img-1773567174192-213338431.webp",
+    "mobileMediaType": "image",
+    "link": "",
+    "buttonText": "",
+    "isActive": true,
+    "hideOnMobile": false,
+    "order": 1,
+    "mediaType": "video",
+    "_id": "69b1d4756cea3e92369d9df3"
+  },
+  {
+    "title": "",
+    "subtitle": "",
+    "image": "/uploads/img-1773561752525-188894979.webp",
+    "mobileImage": "/uploads/img-1773565139798-755471886.webp",
+    "mobileMediaType": "image",
+    "link": "",
+    "buttonText": "",
+    "isActive": true,
+    "hideOnMobile": false,
+    "order": 2,
+    "mediaType": "image",
+    "_id": "69b1d4756cea3e92369d9df4"
+  }
+]
